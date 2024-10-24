@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import { SERVER } from "../utils/constants";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+
+import { useAuth } from "../contexts/AuthContext";
+import { SERVER } from "../utils/constants";
 
 function Header() {
   const { isAuthenticated, setIsAuthenticated, isLoading, setIsLoading } =
@@ -19,15 +20,16 @@ function Header() {
       });
 
       // toast.success(data.message);
-      toast.success("User logged out successfully");
+      toast.success("User logout successfully.");
       setIsAuthenticated(false);
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Error in user logout");
       setIsAuthenticated(true);
     } finally {
       setIsLoading(false);
     }
   }
+  
   return (
     <nav className="header">
       <div>
