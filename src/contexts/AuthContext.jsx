@@ -5,10 +5,11 @@ const AuthContext = createContext();
 function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState({});
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, isLoading, setIsLoading }}
+      value={{ isAuthenticated, setIsAuthenticated, isLoading, setIsLoading, user, setUser }}
     >
       {children}
     </AuthContext.Provider>
