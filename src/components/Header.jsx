@@ -1,35 +1,11 @@
-import axios from "axios";
-import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-
 import { useAuth } from "../contexts/AuthContext";
-import { SERVER } from "../utils/constants";
+
+import Logout from "./Logout";
 
 function Header() {
-  const { isAuthenticated, setIsAuthenticated, isLoading, setIsLoading } =
-    useAuth();
+  const { isAuthenticated } = useAuth();
 
-  async function handleLogout(e) {
-    e.preventDefault();
-    if (!isAuthenticated) return;
-    setIsLoading(true);
-
-    try {
-      await axios.get(`${SERVER}/user/logout`, {
-        withCredentials: true,
-      });
-
-      // toast.success(data.message);
-      toast.success("User logout successfully.");
-      setIsAuthenticated(false);
-    } catch (error) {
-      toast.error("Error in user logout");
-      setIsAuthenticated(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-  
   return (
     <nav className="header">
       <div>
@@ -39,11 +15,7 @@ function Header() {
       <article>
         <Link to={"/"}>Home</Link>
         <Link to={"/profile"}>Profile</Link>
-        {isAuthenticated && (
-          <button disabled={isLoading} onClick={handleLogout}>
-            Logout
-          </button>
-        )}
+        {isAuthenticated && <Logout />}
         {!isAuthenticated && <Link to={"/login"}>Login</Link>}
       </article>
     </nav>

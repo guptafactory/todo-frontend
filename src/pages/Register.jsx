@@ -52,7 +52,7 @@ function Register() {
   return (
     <div className="login">
       <section>
-        <form onSubmit={handleSubmit}>
+        <form name="register-form" id="register-form" onSubmit={handleSubmit}>
           <input
             type="name"
             placeholder="Enter name.."
