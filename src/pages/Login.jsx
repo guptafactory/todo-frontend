@@ -1,10 +1,9 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link, Navigate } from "react-router-dom";
 
 import { useAuth } from "../contexts/AuthContext";
-import axios from "axios";
-import { SERVER } from "../utils/constants";
-import toast from "react-hot-toast";
+import { getLoginUser } from "../services/apiUser";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,24 +19,11 @@ function Login() {
     setIsLoading(true);
 
     try {
-      const { data } = await axios.post(
-        `${SERVER}/user/login`,
-        {
-          email,
-          password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-
+      const data = await getLoginUser(email, password);
       toast.success(data.message);
       setIsAuthenticated(true);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message);
       setIsAuthenticated(false);
     } finally {
       setEmail("");

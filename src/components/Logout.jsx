@@ -1,7 +1,6 @@
-import axios from "axios";
 import toast from "react-hot-toast";
-import { SERVER } from "../utils/constants";
 import { useAuth } from "../contexts/AuthContext";
+import { getLogoutUser } from "../services/apiUser";
 
 function Logout() {
   const { isAuthenticated, setIsAuthenticated, isLoading, setIsLoading } =
@@ -13,16 +12,11 @@ function Logout() {
     setIsLoading(true);
 
     try {
-      const data = await axios.get(`${SERVER}/user/logout`, {
-        withCredentials: true,
-        params: { _cb: new Date().getTime() },
-        responseType: "json",
-      });
-      console.log(data);
-      toast.success(data.data.message);
+      const data = await getLogoutUser();
+      toast.success(data.message);
       setIsAuthenticated(false);
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message);
       setIsAuthenticated(true);
     } finally {
       setIsLoading(false);
